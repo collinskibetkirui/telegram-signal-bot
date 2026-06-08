@@ -1,7 +1,6 @@
 from flask import Flask
 import threading
 import os
-import asyncio
 from bot import main as bot_main
 
 app = Flask(__name__)
@@ -15,12 +14,12 @@ def health():
     return "OK", 200
 
 def run_bot():
-    """Run the bot with asyncio"""
-    asyncio.run(bot_main())
+    bot_main()
 
 if __name__ == "__main__":
     # Start bot in a separate thread
     bot_thread = threading.Thread(target=run_bot)
+    bot_thread.daemon = True
     bot_thread.start()
     
     # Start Flask server
