@@ -594,7 +594,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle incoming text messages"""
     await update.message.reply_text("Please use the buttons to navigate. Send /start to see the menu.")
 
-async def main():
+# ------------------------------------------------------------
+# THE ONLY PART THAT CHANGED – FIXED MAIN FUNCTION (synchronous)
+# ------------------------------------------------------------
+def main():
     """Start the bot"""
     print("=" * 50)
     print("Starting Signal Bot...")
@@ -615,8 +618,8 @@ async def main():
     application.add_handler(MessageHandler(filters.PHOTO, handle_payment_proof))
     
     print("Bot is running!")
-    await application.run_polling()
+    # This is a blocking call that manages its own asyncio loop
+    application.run_polling()
 
 if __name__ == "__main__":
-    import asyncio
-    asyncio.run(main())
+    main()
