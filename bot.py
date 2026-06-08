@@ -594,7 +594,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle incoming text messages"""
     await update.message.reply_text("Please use the buttons to navigate. Send /start to see the menu.")
 
-def main():
+async def main():
     """Start the bot"""
     print("=" * 50)
     print("Starting Signal Bot...")
@@ -614,8 +614,9 @@ def main():
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     application.add_handler(MessageHandler(filters.PHOTO, handle_payment_proof))
     
-    print("Bot is running! Press Ctrl+C to stop.")
-    application.run_polling()
+    print("Bot is running!")
+    await application.run_polling()
 
 if __name__ == "__main__":
-    main()
+    import asyncio
+    asyncio.run(main())
